@@ -17,11 +17,12 @@
         android:onClick="personBT"
         android:text="person"
         android:textColor="#0B0A0A"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/id_search"
-        app:layout_constraintTop_toBottomOf="@+id/recycler" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/id_homepage"
@@ -35,12 +36,13 @@
         android:onClick="homeBT"
         android:text="home"
         android:textColor="#0B0A0A"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/id_search"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/ed_message"
@@ -105,7 +107,7 @@
         android:onClick="searchBT"
         android:text="serach"
         android:textColor="#0B0A0A"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/id_person"
         app:layout_constraintStart_toEndOf="@+id/id_homepage"

@@ -28,17 +28,10 @@ import kotlin.concurrent.thread
  * create an instance of this fragment.
  */
 class RoomFragment : Fragment() {
-//    private lateinit var adapter: ChatRoomAdapter
-//    val chatRoom_person= listOf<ChatRoom>(
-//        ChatRoom("20220321","apple","welcome"),
-//        ChatRoom("20220321","banana","welcome"),
-//        ChatRoom("20220321","cherry","welcome"),
-//        ChatRoom("20220321","orange","welcome"),
-//    )
-    val rooms= mutableListOf<Lightyear>()
-    lateinit var websocket:WebSocket
-    private val TAG= FragmentRoomBinding::class.java.simpleName
+
     lateinit var binding: FragmentRoomBinding
+    private val TAG= FragmentRoomBinding::class.java.simpleName
+    val messages = mutableListOf<String>("你好呀","哈哈 很棒","加油 你可以的","繼續保持","明天見")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +44,9 @@ class RoomFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val room=arguments?.getParcelable<Lightyear>("ROOM")
+        Log.d(TAG, "room:${room?.stream_title}")
+        Log.d(TAG, "room:${room?.stream_id}")
+        Log.d(TAG, "room:${room?.start_time}")
     }
 }

@@ -3,18 +3,21 @@ package com.lubin.lubinchatapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.lubin.lubinchatapp.databinding.FragmentSecondBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okio.ByteString
 import java.net.URL
@@ -25,7 +28,8 @@ import kotlin.concurrent.thread
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class SecondFragment : Fragment() {//首頁出現直播主的資料
-private lateinit var adapter: ChatRoomAdapter
+    private lateinit var adapter: ChatRoomAdapter
+    val viewModel by viewModels<ChatViewModel>()
     val chatRoom= listOf<ChatRoom>(
         ChatRoom("20220321","apple","welcome1"),
         ChatRoom("20220322","banana","welcome2"),
@@ -112,10 +116,10 @@ private lateinit var adapter: ChatRoomAdapter
             val message=binding.edMessage.text.toString()
             websocket.send(Gson().toJson(MessageSend("N",message)))
         }
-        binding.idSearch.setOnClickListener {
-            val intent=Intent(context,SearchActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.idSearch.setOnClickListener {
+//            val intent=Intent(context,SearchActivity::class.java)
+//            startActivity(intent)
+//        }
         binding.idPerson.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
@@ -123,12 +127,25 @@ private lateinit var adapter: ChatRoomAdapter
         binding.recycler.layoutManager=GridLayoutManager(requireContext(),2)
         adapter=ChatRoomAdapter()
         binding.recycler.adapter=adapter
-        thread {
+
+
+        //viewModel
+        viewModel.chatRooms.observe(viewLifecycleOwner){rooms->
+            adapter.updateRooms(rooms)
+        }
+        viewModel.getAllRooms()
+        //CoroutineScope(Dispatchers.IO)
+        CoroutineScope(Dispatchers.IO).launch {
             val json=URL("https://api.jsonserve.com/J0kY56").readText()
             val msg=Gson().fromJson(json, Message::class.java)
             Log.d(TAG, "msg:${msg.body.text}")//test msg
         }
-        thread {
+        /*thread {//Coroutine
+            val json=URL("https://api.jsonserve.com/J0kY56").readText()
+            val msg=Gson().fromJson(json, Message::class.java)
+            Log.d(TAG, "msg:${msg.body.text}")//test msg
+        }
+        thread {//viewModel
             val json=URL("https://api.jsonserve.com/f868pa").readText()
             val chatRooms=Gson().fromJson(json, ChatRooms::class.java)
             Log.d(TAG, "rooms:${chatRooms.result.lightyear_list.size}")
@@ -137,7 +154,7 @@ private lateinit var adapter: ChatRoomAdapter
             activity?.runOnUiThread {
                 adapter.notifyDataSetChanged()
             }
-        }
+        }*/
     }
     inner class ChatRoomAdapter:RecyclerView.Adapter<ChatRoomViewHolder>(){
         val chatRooms= mutableListOf<Lightyear>()
@@ -153,19 +170,50 @@ private lateinit var adapter: ChatRoomAdapter
             Glide.with(this@SecondFragment)
                 .load(lightYear.head_photo)
                 .into(holder.headshot)
+            holder.itemView.setOnClickListener {
+                chatRoomClicked(lightYear)
+            }
         }
 
         override fun getItemCount(): Int {
             return chatRooms.size//回傳陣列長度
         }
+        fun updateRooms(rooms: List<Lightyear>){
+            chatRooms.clear()
+            chatRooms.addAll(rooms)
+            notifyDataSetChanged()
+        }
     }
     inner class ChatRoomViewHolder(view: View):RecyclerView.ViewHolder(view){//recycler回收的人
-    val host=view.findViewById<TextView>(R.id.hostname)
+        val host=view.findViewById<TextView>(R.id.hostname)
         val title=view.findViewById<TextView>(R.id.chatroom_title)
         val headshot=view.findViewById<ImageView>(R.id.headshot)
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    fun chatRoomClicked(lightyear: Lightyear){
+        val bundle=Bundle().apply {
+            putParcelable("room",lightyear)
+        }
+        findNavController().navigate(R.id.action_roomList_to_singleRoom,bundle)
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_roomlist, menu)
+        val item = menu.findItem(R.id.app_bar_search)
+        val searchView = item.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return false
+            }
+        })
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }
