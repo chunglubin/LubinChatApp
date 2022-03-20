@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".SearchActivity">
+
+    <SearchView
+        android:id="@+id/id_search_first"
+        style="@android:style/Widget.Material.SearchView"
+        android:layout_width="340dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:background="#CFC3C3"
+        android:backgroundTint="#C1ACAC"
+        android:contextClickable="true"
+        android:inputType="textLongMessage|textAutoCorrect|textWebEditText|textPersonName|text"
+        android:onClick="searchBT2"
+        android:queryHint="search"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
