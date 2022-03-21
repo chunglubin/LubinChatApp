@@ -45,14 +45,22 @@ class SignUpFragment : Fragment() {
             pickFromGallery()
         }
         binding.idSubmit.setOnClickListener {
+            val name=binding.idUsername.text.toString()
             val id_update=binding.editUserid.text.toString()
             val password_update=binding.editPassword.text.toString()
-            if(id_update=="lubinflower"&&password_update=="20220321"){
+            if(name=="lubin"&&id_update=="lubinflower"&&password_update=="20220321"){
                 findNavController().navigate(R.id.action_SignUpFragment_to_FirstFragment)
             }
+        }
+        binding.idBack.setOnClickListener {
+            findNavController().navigate(R.id.action_SignUpFragment_to_SecondFragment)
+        }
+        binding.idCamera.setOnClickListener {
+            pickFromGallery()
         }
     }
     private fun pickFromGallery(){
         selectPictureFromGallery.launch("image/*")
+
     }
 }

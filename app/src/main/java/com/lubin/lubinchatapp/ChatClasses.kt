@@ -5,6 +5,71 @@ import kotlinx.parcelize.Parcelize
 
 data class MessageSend(val action:String,val content:String)
 
+data class sys_room_endStream(
+    val body: Body,
+    val event: String,
+    val room_id: String,
+    val sender_role: Int,
+    val time: String
+)
+
+data class Body4(
+    val text: String,
+    val type: String
+)
+data class admin_all_broadcast(
+    val body: Body,
+    val event: String,
+    val room_id: String,
+    val sender_role: Int,
+    val time: String
+)
+
+data class Body3(
+    val content: Content
+)
+
+data class Content(
+    val cn: String,
+    val en: String,
+    val tw: String
+)
+data class sys_updateRoomStatus(
+    val body: Body,
+    val event: String,
+    val room_id: String,
+    val sender_role: Int,
+    val time: String
+)
+
+data class Body2(
+    val contribute_sum: Int,
+    val entry_notice: EntryNotice,
+    val guardian_count: Int,
+    val guardian_sum: Int,
+    val real_count: Int,
+    val room_count: Int,
+    val user_infos: UserInfos
+)
+
+data class EntryNotice(
+    val action: String,
+    val entry_banner: EntryBanner,
+    val head_photo: String,
+    val username: String
+)
+
+data class UserInfos(
+    val guardianlist: List<Any>,
+    val onlinelist: Any
+)
+
+data class EntryBanner(
+    val img_url: String,
+    val main_badge: String,
+    val other_badges: List<Any>,
+    val present_type: String
+)
 data class ChatRooms(
     val error_code: String,
     val error_text: String,

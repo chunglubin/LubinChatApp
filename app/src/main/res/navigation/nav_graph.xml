@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_roomList_to_singleRoom"
             app:destination="@id/RoomFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_self"
+            app:destination="@id/SecondFragment" />
     </fragment>
     <fragment android:id="@+id/SignUpFragment"
         android:name="com.lubin.lubinchatapp.SignUpFragment"
@@ -39,9 +42,16 @@
         <action
             android:id="@+id/action_SignUpFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_SignUpFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
     </fragment>
     <fragment android:id="@+id/RoomFragment"
         android:name="com.lubin.lubinchatapp.RoomFragment"
         android:label="Room Fragment"
-        tools:layout="@layout/fragment_room"/>
+        tools:layout="@layout/fragment_room">
+        <action
+            android:id="@+id/action_RoomFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+    </fragment>
 </navigation>

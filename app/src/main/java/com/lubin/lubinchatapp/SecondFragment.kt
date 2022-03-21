@@ -1,6 +1,5 @@
 package com.lubin.lubinchatapp
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -8,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.VideoView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -116,12 +116,14 @@ class SecondFragment : Fragment() {//首頁出現直播主的資料
             val message=binding.edMessage.text.toString()
             websocket.send(Gson().toJson(MessageSend("N",message)))
         }
-//        binding.idSearch.setOnClickListener {
-//            val intent=Intent(context,SearchActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.idHomepage.setOnClickListener {
+            findNavController().navigate(R.id.SecondFragment)
+        }
+        binding.idSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+        }
         binding.idPerson.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
         binding.recycler.setHasFixedSize(true)
         binding.recycler.layoutManager=GridLayoutManager(requireContext(),2)
@@ -140,14 +142,19 @@ class SecondFragment : Fragment() {//首頁出現直播主的資料
             val msg=Gson().fromJson(json, Message::class.java)
             Log.d(TAG, "msg:${msg.body.text}")//test msg
         }
-        /*thread {//Coroutine
-            val json=URL("https://api.jsonserve.com/J0kY56").readText()
-            val msg=Gson().fromJson(json, Message::class.java)
-            Log.d(TAG, "msg:${msg.body.text}")//test msg
+        thread {//Coroutine
+            val sys_updateRoomStatus=URL("https://api.jsonserve.com/oghcyL").readText()
+            val msg2=Gson().fromJson(sys_updateRoomStatus, Message::class.java)
+            Log.d(TAG, "msg:${msg2.body.text}")//test msg
         }
-        thread {//viewModel
-            val json=URL("https://api.jsonserve.com/f868pa").readText()
-            val chatRooms=Gson().fromJson(json, ChatRooms::class.java)
+        thread {//Coroutine
+            val admin_all_broadcast=URL("https://api.jsonserve.com/CHGXEk").readText()
+            val msg3=Gson().fromJson(admin_all_broadcast, Message::class.java)
+            Log.d(TAG, "msg:${msg3.body.text}")//test msg
+        }
+        /*thread {//viewModel
+            val sys_room_endStream = URL("https://api.jsonserve.com/fpjTnc").readText()
+            val chatRooms = Gson().fromJson(sys_room_endStream, ChatRooms::class.java)
             Log.d(TAG, "rooms:${chatRooms.result.lightyear_list.size}")
             rooms.clear()
             rooms.addAll(chatRooms.result.lightyear_list)//fill list with new coming data

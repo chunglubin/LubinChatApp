@@ -33,7 +33,6 @@ class RoomFragment : Fragment() {
     lateinit var binding: FragmentRoomBinding
     private val TAG= FragmentRoomBinding::class.java.simpleName
     val messages = mutableListOf<String>("你好呀","哈哈 很棒","加油 你可以的","繼續保持","明天見")
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,14 +40,20 @@ class RoomFragment : Fragment() {
         // Inflate the layout for this fragment
         binding= FragmentRoomBinding.inflate(inflater, container, false)
         return binding.root
+        Log.d(TAG, "messages=${messages}")
+        //binding.recycler.adapter=messages
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val room=arguments?.getParcelable<Lightyear>("ROOM")
         Log.d(TAG, "room:${room?.stream_title}")
-        Log.d(TAG, "room:${room?.stream_id}")
-        Log.d(TAG, "room:${room?.start_time}")
-        binding.video.setVideoURI((Uri.parse("https://player.vimeo.com/video/653928650")))
+    //        Log.d(TAG, "room:${room?.stream_id}")
+//        Log.d(TAG, "room:${room?.start_time}")
+    //binding.idVideo.setVideoPath(context.getFileStreamPath("/data/data/com.lubin.bmi3"))
+        val input_message=binding.inputMessage.text.toString()
+        Log.d(TAG, "message=${input_message}")
+        binding.idExit.setOnClickListener {
+            findNavController().navigate(R.id.action_RoomFragment_to_SecondFragment)
+        }
     }
 }

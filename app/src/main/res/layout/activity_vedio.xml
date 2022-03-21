@@ -4,27 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C6B5B5"
+    android:backgroundTint="#64A8B1"
     tools:context=".VedioActivity">
 
     <Button
         android:id="@+id/b_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="180dp"
-        android:text="Button"
+        android:layout_marginBottom="232dp"
+        android:backgroundTint="#C6A77A"
+        android:text="@string/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.451"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_pic"
+        app:layout_constraintVertical_bias="0.316" />
 
     <ImageView
         android:id="@+id/iv_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="228dp"
-        app:layout_constraintBottom_toTopOf="@+id/b_picture"
+        android:layout_width="119dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="185dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.438"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/tabpersonal" />
 </androidx.constraintlayout.widget.ConstraintLayout>
