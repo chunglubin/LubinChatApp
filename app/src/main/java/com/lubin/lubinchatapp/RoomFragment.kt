@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.lubin.lubinchatapp.databinding.FragmentRoomBinding
 import okhttp3.*
+import java.net.URL
+import kotlin.concurrent.thread
 
 /**
  * A simple [Fragment] subclass.
@@ -39,11 +42,10 @@ class RoomFragment : Fragment() {
 
         val uri = "android.resource://"+requireContext().packageName+ "/"+R.raw.hime3
         val videoURI = Uri.parse(uri)
-        //binding.idVideo.setMediaController(mediaController)
+        binding.idVideo.setMediaController(mediaController)
         binding.idVideo.setVideoURI(videoURI)
-        //binding.idVideo.requestFocus()
-        binding.idVideo.setOnPreparedListener{
-            binding.idVideo.start()
+        binding.idVideo.requestFocus()
+        binding.idVideo.setOnPreparedListener{ binding.idVideo.start()
         }
 
 
@@ -57,7 +59,6 @@ class RoomFragment : Fragment() {
         binding.idExit.setOnClickListener {
             findNavController().navigate(R.id.action_RoomFragment_to_SecondFragment)
         }
-
     }
 //    private fun setupVideoView() {
 //        val videoView = view?.findViewById<VideoView>(R.id.id_video)
