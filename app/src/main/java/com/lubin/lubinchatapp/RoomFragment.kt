@@ -1,27 +1,16 @@
 package com.lubin.lubinchatapp
 
-import android.content.Intent
 import android.net.Uri
-import android.os.Binder
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.lubin.lubinchatapp.databinding.FragmentRoomBinding
 import okhttp3.*
-import okio.ByteString
-import java.net.URL
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 
 /**
  * A simple [Fragment] subclass.
@@ -45,15 +34,37 @@ class RoomFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var mediaController=MediaController(requireContext())
+        mediaController.setAnchorView(binding.idVideo)
+
+        val uri = "android.resource://"+requireContext().packageName+ "/"+R.raw.hime3
+        val videoURI = Uri.parse(uri)
+        //binding.idVideo.setMediaController(mediaController)
+        binding.idVideo.setVideoURI(videoURI)
+        //binding.idVideo.requestFocus()
+        binding.idVideo.setOnPreparedListener{
+            binding.idVideo.start()
+        }
+
+
         val room=arguments?.getParcelable<Lightyear>("ROOM")
         Log.d(TAG, "room:${room?.stream_title}")
     //        Log.d(TAG, "room:${room?.stream_id}")
 //        Log.d(TAG, "room:${room?.start_time}")
-    //binding.idVideo.setVideoPath(context.getFileStreamPath("/data/data/com.lubin.bmi3"))
+        //binding.idVideo.setVideoPath(context.getFileStreamPath("/data/data/com.lubin.bmi3"))
         val input_message=binding.inputMessage.text.toString()
         Log.d(TAG, "message=${input_message}")
         binding.idExit.setOnClickListener {
             findNavController().navigate(R.id.action_RoomFragment_to_SecondFragment)
         }
+
     }
+//    private fun setupVideoView() {
+//        val videoView = view?.findViewById<VideoView>(R.id.id_video)
+//        videoView?.setVideoURI(Uri.parse("android.resource://"  +requireContext().packageName+ "/" + R.raw.hime3))
+//        videoView?.start()
+//
+//        // hide media controller
+//        videoView?.setMediaController(null)
+//    }
 }

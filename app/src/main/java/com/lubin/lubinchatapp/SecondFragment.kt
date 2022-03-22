@@ -3,11 +3,8 @@ package com.lubin.lubinchatapp
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.widget.ImageView
-import android.widget.SearchView
-import android.widget.TextView
-import android.widget.VideoView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -70,6 +67,7 @@ class SecondFragment : Fragment() {//首頁出現直播主的資料
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
@@ -129,7 +127,7 @@ class SecondFragment : Fragment() {//首頁出現直播主的資料
         binding.recycler.layoutManager=GridLayoutManager(requireContext(),2)
         adapter=ChatRoomAdapter()
         binding.recycler.adapter=adapter
-
+        //videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.testmovie));
 
         //viewModel
         viewModel.chatRooms.observe(viewLifecycleOwner){rooms->
